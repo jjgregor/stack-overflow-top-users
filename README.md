@@ -32,4 +32,4 @@
 
 ## Third-party libraries
 
-- You are discouraged to use third-party libraries in general with the exception of libraries to help with making the REST API Call (just don't use UI/Image helpers).
+- If you choose to use any third-party libraries, please explain why you made the decision to use each one.
