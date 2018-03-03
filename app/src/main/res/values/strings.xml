@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Stack Overflow Users</string>
+    <string name="error_loading_users">Oh no! An error has occurred,please try again.</string>
 </resources>
