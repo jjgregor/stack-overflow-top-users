@@ -1,6 +1,8 @@
 package com.jason.stackoverflowusers.adapters
 
 import android.databinding.DataBindingUtil
+import android.net.Uri
+import android.support.customtabs.CustomTabsIntent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,6 +12,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.jason.stackoverflowusers.R
 import com.jason.stackoverflowusers.databinding.UserCardViewBinding
 import com.jason.stackoverflowusers.models.User
+import java.text.NumberFormat
+
+
 
 /**
  * Created by Jason on 3/3/18.
@@ -26,7 +31,8 @@ class UsersAdapter(val users: ArrayList<User>) : RecyclerView.Adapter<UsersAdapt
     inner class ViewHolder(val binding: UserCardViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindUsers(user: User) {
-            user.reputation = String.format("%s Reputation", user.reputation)
+            val repInt = Integer.parseInt(user.reputation)
+            user.reputation = String.format("%s Reputation", NumberFormat.getInstance().format(repInt))
             binding.user = user
             user.profile_image?.let {
                 Glide.with(itemView.context)
@@ -35,17 +41,14 @@ class UsersAdapter(val users: ArrayList<User>) : RecyclerView.Adapter<UsersAdapt
                                 .centerCrop()
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .placeholder(R.drawable.jon_snow))
-//                        .listener(object :RequestListener<Drawable> {
-//                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-//                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//                            }
-//
-//                            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-//                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//                            }
-//
-//                        })
                         .into(binding.userImage)
+            }
+
+            binding.root.setOnClickListener {
+                val builder = CustomTabsIntent.Builder()
+                builder.setStartAnimations(binding.root.context, R.anim.slide_in_right, R.anim.slide_out_left)
+                builder.setExitAnimations(binding.root.context, R.anim.slide_in_left, R.anim.slide_out_right)
+                builder.build().launchUrl(binding.root.context, Uri.parse(user.link))
             }
         }
     }

@@ -8,7 +8,8 @@ data class UsersResponse(val items: ArrayList<User>? = ArrayList())
 data class User(val display_name: String? = "",
                 val profile_image: String? = "",
                 var reputation: String? = "",
-                val badge_counts: Badge? = Badge(0, 0, 0))
+                val badge_counts: Badge? = Badge(0, 0, 0),
+                val link: String? = "")
 
 data class Badge(val gold: Int? = 0,
                  val silver: Int? = 0,
