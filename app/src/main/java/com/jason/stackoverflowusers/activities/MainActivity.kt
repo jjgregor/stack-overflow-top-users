@@ -28,7 +28,11 @@ class MainActivity : AppCompatActivity() {
 
         swipe_refresh.setOnRefreshListener { getUsers() }
 
-        getUsers()
+        if (viewModel.users?.isEmpty() == true) {
+            getUsers()
+        } else {
+            bindUsers()
+        }
     }
 
     private fun getUsers() {
@@ -43,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             Log.e(TAG, "Error getting users.")
         })
 
-        if(swipe_refresh.isRefreshing) {
+        if (swipe_refresh.isRefreshing) {
             swipe_refresh.isRefreshing = false
         }
 
