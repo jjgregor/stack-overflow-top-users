@@ -12,10 +12,7 @@ import com.jason.stackoverflowusers.dagger.NetworkModule
  */
 class WagApp : Application() {
 
-    companion object {
-        @JvmStatic
-        lateinit var component: AppComponent
-    }
+    lateinit var component: AppComponent
 
     override fun onCreate() {
         super.onCreate()
@@ -26,11 +23,10 @@ class WagApp : Application() {
                 .networkModule(NetworkModule(getString(R.string.base_url), applicationContext))
                 .build()
 
-        component.inject(this)
 
         Stetho.initializeWithDefaults(this)
     }
 
-
+    fun getAppComponent(): AppComponent = component
 
 }
