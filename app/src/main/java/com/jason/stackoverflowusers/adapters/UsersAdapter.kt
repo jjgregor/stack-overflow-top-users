@@ -35,6 +35,16 @@ class UsersAdapter(val users: ArrayList<User>) : RecyclerView.Adapter<UsersAdapt
                                 .centerCrop()
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .placeholder(R.drawable.jon_snow))
+//                        .listener(object :RequestListener<Drawable> {
+//                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+//                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                            }
+//
+//                            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+//                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                            }
+//
+//                        })
                         .into(binding.userImage)
             }
         }

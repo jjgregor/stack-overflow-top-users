@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getUsers() {
-        Log.d(TAG, "API: " + viewModel.getUsers())
         viewModel.getUsers()?.subscribe({ response ->
             response?.let {
                 viewModel.users = it.items
@@ -44,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             } ?: onError()
         }, { t: Throwable? ->
             onError()
-            Log.e(TAG, "Error getting users.")
+            Log.e(TAG, "Error getting users.", t)
         })
 
         if (swipe_refresh.isRefreshing) {
