@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private val TAG = MainActivity::class.java.simpleName
 
     private lateinit var viewModel: UsersViewModel
+    private lateinit var adapter: UsersAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,10 +26,11 @@ class MainActivity : AppCompatActivity() {
         (application as WagApp).getAppComponent().inject(this)
 
         viewModel = ViewModelProviders.of(this).get(UsersViewModel::class.java)
+        adapter = UsersAdapter(viewModel.users)
 
         swipe_refresh.setOnRefreshListener { getUsers() }
 
-        if (viewModel.users?.isEmpty() == true) {
+        if (viewModel.users.isEmpty() == true) {
             getUsers()
         } else {
             bindUsers()
@@ -38,7 +40,8 @@ class MainActivity : AppCompatActivity() {
     private fun getUsers() {
         viewModel.getUsers()?.subscribe({ response ->
             response?.let {
-                viewModel.users = it.items
+                viewModel.users = it.items ?: ArrayList()
+                adapter.updateData(viewModel.users)
                 bindUsers()
             } ?: onError()
         }, { t: Throwable? ->
@@ -53,12 +56,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bindUsers() {
-        viewModel.users?.let {
-            progress_bar.visibility = View.GONE
-            recycler_view.layoutManager = GridLayoutManager(this, 2)
-            recycler_view.adapter = UsersAdapter(it)
-            recycler_view.visibility = View.VISIBLE
-        } ?: onError()
+        progress_bar.visibility = View.GONE
+        recycler_view.layoutManager = GridLayoutManager(this, 2)
+        recycler_view.adapter = adapter
+        recycler_view.visibility = View.VISIBLE
     }
 
     private fun onError() {

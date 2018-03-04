@@ -15,7 +15,6 @@ import com.jason.stackoverflowusers.models.User
 import java.text.NumberFormat
 
 
-
 /**
  * Created by Jason on 3/3/18.
  */
@@ -28,11 +27,16 @@ class UsersAdapter(val users: ArrayList<User>) : RecyclerView.Adapter<UsersAdapt
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
         = ViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.user_card_view, parent, false))
 
+    fun updateData(data: ArrayList<User>) {
+        users.clear()
+        users.addAll(data)
+        notifyDataSetChanged()
+    }
+
     inner class ViewHolder(val binding: UserCardViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindUsers(user: User) {
-            val repInt = Integer.parseInt(user.reputation)
-            user.reputation = String.format("%s Reputation", NumberFormat.getInstance().format(repInt))
+            user.reputation = formatRepNumber(user.reputation)
             binding.user = user
             user.profile_image?.let {
                 Glide.with(itemView.context)
@@ -49,6 +53,15 @@ class UsersAdapter(val users: ArrayList<User>) : RecyclerView.Adapter<UsersAdapt
                 builder.setStartAnimations(binding.root.context, R.anim.slide_in_right, R.anim.slide_out_left)
                 builder.setExitAnimations(binding.root.context, R.anim.slide_in_left, R.anim.slide_out_right)
                 builder.build().launchUrl(binding.root.context, Uri.parse(user.link))
+            }
+        }
+
+        private fun formatRepNumber(reputation: String?) : String {
+            return if (reputation?.isNotEmpty() == true && !reputation.contains(",")) {
+                val repInt = Integer.parseInt(reputation)
+                String.format("%s Reputation", NumberFormat.getInstance().format(repInt))
+            } else {
+                reputation ?: ""
             }
         }
     }

@@ -16,7 +16,7 @@ class UsersViewModel(app:  Application) : AndroidViewModel(app) {
 
     @Inject lateinit var stackOverflowService: StackOverflowService
 
-    var users: ArrayList<User>? = ArrayList()
+    var users: ArrayList<User> = ArrayList()
 
     init {
         (app as WagApp).getAppComponent().inject(this)
