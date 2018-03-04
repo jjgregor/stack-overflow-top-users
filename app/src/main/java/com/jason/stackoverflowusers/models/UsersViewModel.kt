@@ -12,7 +12,7 @@ import javax.inject.Inject
 /**
  * Created by Jason on 3/3/18.
  */
-class UsersViewModel(app:  Application) : AndroidViewModel(app) {
+class UsersViewModel(app: Application) : AndroidViewModel(app) {
 
     @Inject lateinit var stackOverflowService: StackOverflowService
 
@@ -26,7 +26,6 @@ class UsersViewModel(app:  Application) : AndroidViewModel(app) {
         return stackOverflowService.getUsers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-
     }
 
 }

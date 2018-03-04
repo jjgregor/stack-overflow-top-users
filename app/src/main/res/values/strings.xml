@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Stack Overflow Users</string>
-    <string name="error_loading_users">Oh no! An error has occurred,please try again.</string>
+    <string name="error_loading_users">Oh no! Looks like there aren\'t any users!</string>
     <string name="base_url">https://api.stackexchange.com/</string>
-    <string name="get_users_error">Error getting Users</string>
+    <string name="get_users_error">Error loading new users</string>
 </resources>
