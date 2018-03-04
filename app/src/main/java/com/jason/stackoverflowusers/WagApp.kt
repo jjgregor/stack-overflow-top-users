@@ -1,7 +1,6 @@
 package com.jason.stackoverflowusers
 
 import android.app.Application
-import com.facebook.stetho.Stetho
 import com.jason.stackoverflowusers.dagger.AppComponent
 import com.jason.stackoverflowusers.dagger.AppModule
 import com.jason.stackoverflowusers.dagger.DaggerAppComponent
@@ -22,9 +21,6 @@ class WagApp : Application() {
                 .appModule(AppModule(this))
                 .networkModule(NetworkModule(getString(R.string.base_url), applicationContext))
                 .build()
-
-
-        Stetho.initializeWithDefaults(this)
     }
 
     fun getAppComponent(): AppComponent = component
